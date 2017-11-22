@@ -22,16 +22,17 @@ public class VisitorGenerator implements Runnable {
             Visitor visitor = new Visitor(home);
             Thread visitorThread = new Thread(visitor);
             visitor.setName("Costumed Candy Seeker " + childCount);
-            visitorThread.start();
             childCount++;
+            visitorThread.start();
+
 
             try
             {
-                TimeUnit.SECONDS.sleep((long)(Math.random()*10));
+                TimeUnit.SECONDS.sleep((long)(Math.random()* 3.5 ));
             }
             catch(InterruptedException iex)
             {
-                iex.printStackTrace(); //todo
+                log.error("Interrupted Exception", iex);
             }
         }
     }

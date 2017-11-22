@@ -24,12 +24,12 @@ public class Home {
         synchronized (visitorList) {
 
             while(visitorList.size()==0) {
-                log.info("Riley is waiting for visitors.");
+                log.info("Riley is watching tv, waiting for visitors.");
                 try {
                     visitorList.wait();
                 }
                 catch(InterruptedException iex) {
-                    iex.printStackTrace();
+                    log.error("Interrupted Exception", iex);
                 }
             }
             log.info("Riley found a visitor at the door.");
@@ -40,32 +40,26 @@ public class Home {
             TimeUnit.SECONDS.sleep(3);
         }
         catch(InterruptedException iex) {
-            iex.printStackTrace();
+            log.error("Interrupted Exception", iex);
         }
         log.info("Finished giving candy to visitor : " + visitor.getName());
     }
 
     public void add(Visitor visitor) {
-        log.info("Visitor : " + visitor.getName()+ " approaching the house ");
+        log.info(visitor.getName()+ " approaches the house ");
 
         synchronized (visitorList) {
             if(visitorList.size() == visitorCapacity)
             {
-                log.info("Child passes the house by" + visitor.getName());
-                log.info("Child " + visitor.getName() + "Exists...");
+                log.info("OH NO! Child passes the house by" + visitor.getName());
                 return ;
             }
 
             ((LinkedList<Visitor>)visitorList).offer(visitor);
-            log.info("Child : " + visitor.getName()+ " got some candy.");
+            log.info(visitor.getName()+ " says TRICK OR TREAT.");
 
             if(visitorList.size()==1)
                 visitorList.notify();
         }
     }
-
-
-
-
-
 }
